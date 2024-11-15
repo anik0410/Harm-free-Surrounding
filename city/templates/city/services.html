@@ -1,0 +1,134 @@
+  {% extends 'city/navbar.html' %} {% load static %} {% block title %}
+  <title>Clean Dream | Services</title>
+  {% endblock title %} {% block content %}
+  <style>
+    .container {
+      background: rgb(233, 232, 232);
+    }
+    p {
+      font-size: 18px;
+      text-indent: 20px;
+    }
+  </style>
+
+  <br />
+  <h1>Services</h1>
+  {% if user.is_authenticated %}
+  {% if user.is_employee %}
+  <a class="btn btn-primary m-2 " href="{% url 'add_service' %}">Add Service</a>
+  {% endif %}
+  {% endif %}
+
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <p>
+          <br />
+          As an organization, we take the health and safety of our community very
+          seriously. We understand that garbage, sewage, and stagnant water can
+          pose a threat to the well-being of individuals and the environment. That
+          is why we have a dedicated team of workers who are responsible for
+          addressing any complaints related to these issues. Our workers are
+          trained and equipped with the necessary tools to effectively resolve any
+          concerns that may arise. We encourage members of our community to reach
+          out to us with any complaints they may have, as we are committed to
+          providing a clean and safe environment for all. Our service types are
+          listed below.
+        </p>
+      </div>
+      <div class="col-md-6">
+        <div
+          id="carouselExampleIndicators"
+          class="carousel slide"
+          data-bs-ride="carousel"
+        >
+          <div class="carousel-indicators">
+            <button
+              type="button"
+              data-bs-target="#carouselExampleIndicators"
+              data-bs-slide-to="0"
+              class="active"
+              aria-current="true"
+              aria-label="Slide 1"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#carouselExampleIndicators"
+              data-bs-slide-to="1"
+              aria-label="Slide 2"
+            ></button>
+            <button
+              type="button"
+              data-bs-target="#carouselExampleIndicators"
+              data-bs-slide-to="2"
+              aria-label="Slide 3"
+            ></button>
+          </div>
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <img
+                src="{% static 'images/about1.jpg' %}"
+                class="d-block w-100"
+                alt="Slide 1"
+              />
+            </div>
+            <div class="carousel-item">
+              <img
+                src="{% static 'images/about2.jpg' %}"
+                class="d-block w-100"
+                alt="Slide 2"
+              />
+            </div>
+            <div class="carousel-item">
+              <img
+                src="{% static 'images/about3.jpg' %}"
+                class="d-block w-100"
+                alt="Slide 3"
+              />
+            </div>
+          </div>
+          <button
+            class="carousel-control-prev"
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="prev"
+          >
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button
+            class="carousel-control-next"
+            type="button"
+            data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="next"
+          >
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+
+<div class="container-fluid">
+  <div class="row">
+    {% for service in services %}
+    <div class="col-md-6 col-lg-4">
+      <div class="card mb-4 shadow-sm">
+        <img
+          class="card-img-top"
+          src="{{ service.image.url }}"
+          alt="Card image cap"
+        />
+        <div class="card-body">
+          <h4 class="card-title">{{ service.title }}</h4>
+          <p class="card-text">
+            {{ service.description }}
+          </p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+  {% endblock content %}

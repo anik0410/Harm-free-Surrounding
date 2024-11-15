@@ -1,0 +1,31 @@
+{% extends "city/navbar.html" %}
+
+
+{% load custom_filters %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">Testimonials</h2>
+  <div class="row">
+    {% for feedback in feedback_list %}
+    <div class="col-md-6 mb-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">{{ feedback.person_name }}</h5>
+          <p class="card-text">{{ feedback.testimonial }}</p>
+      <p class="card-text">
+            {% for i in feedback.rating|make_list %}
+              <span class="fa fa-star checked"></span>
+            {% endfor %}
+            {% for i in 5|subtract:feedback.rating|make_list %}
+              <span class="fa fa-star-o"></span>
+            {% endfor %}
+          </p>
+          <p class="card-text"><small class="text-muted">{{ feedback.date|date:"F d, Y" }}</small></p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock content %}

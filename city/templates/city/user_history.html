@@ -1,0 +1,25 @@
+{% extends "city/navbar.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">User History</h1>
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Date</th>
+                    <th>Visits</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for date, visits in visit_history.items %}
+                <tr>
+                    <td>{{ date }}</td>
+                    <td>{{ visits }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

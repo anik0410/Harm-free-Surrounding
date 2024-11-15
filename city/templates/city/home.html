@@ -1,0 +1,79 @@
+{% extends 'city/navbar.html' %}
+{% load static %}
+
+{% block title %}
+<title>Clean Dream</title>
+{% endblock title %}
+
+{% block content %}
+<div class="carousel slide" id="slides" data-ride="carousel">
+  <ul class="carousel-indicators">
+    <li data-target="#slides" data-slide-to="0" class="active"></li>
+  </ul>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{% static 'images/farming.jpeg' %}" />
+      <div class="carousel-caption">
+        <h1 class="display-2">Crowdsourced environmental reporting platform</h1>
+        <h3>clean environment</h3>
+        <a
+          href="{% url 'complaint' %}"
+          class="btn btn-outline-light btn-outline-light btn-lg"
+          >Complaint</a
+        >
+        <a
+          href="{% url 'green_initiatives' %}"
+          class="btn btn-outline-light btn-outline-light btn-lg"
+          >Green Initiatives</a
+        >
+        <a
+          href="{% url 'check_status' %}"
+          id="status"
+          class="btn btn-outline-light btn-outline-light btn-lg"
+        >
+          Check Status
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+
+<!-- statistics cards -->
+{% include 'city/cards.html' %}
+
+<!-- jumbotron -->
+<style>
+  #about {
+    background: rgb(233, 232, 232);
+  }
+  p {
+    font-size: 18px;
+  }
+</style>
+<div class="container" id="about">
+  <div class="row">
+    <div class="col-md-6">
+      <h1>About Us</h1>
+      <p>
+        The webpage efficiently addresses the complaints registered by users
+        regarding garbage, sewage, and other pollution-related issues. It
+        provides a quick and easy way for citizens to report their concerns and
+        ensures timely resolution of the same. Overall, it is a great initiative
+        to ensure that the cities are clean, pollution-free, and healthy for the
+        residents.
+      </p>
+      <a class="btn btn-primary" href="{% url 'feedback' %}">Testimonials</a>
+    </div>
+    <div class="col-md-6">
+      <img
+        src="{% static 'images/nature.jpg' %}"
+        alt="About Us Image"
+        class="img-fluid"
+      />
+    </div>
+  </div>
+</div>
+<br />
+
+{% endblock content %}

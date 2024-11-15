@@ -1,0 +1,139 @@
+[
+{
+    "model": "city.myuser",
+    "pk": 3,
+    "fields": {
+        "password": "pbkdf2_sha256$390000$kmxEsefH4K0HIansYW18eX$3GiOysryHzzRVhuuUwdPeIX0NlfTL40INDqSGJaEQkU=",
+        "last_login": "2024-06-27T15:57:46.984Z",
+        "is_superuser": true,
+        "username": "admin",
+        "first_name": "",
+        "last_name": "",
+        "is_staff": true,
+        "is_active": true,
+        "date_joined": "2024-06-27T15:55:42.230Z",
+        "email": "t@g.com",
+        "is_user": true,
+        "is_employee": false,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "city.myuser",
+    "pk": 1,
+    "fields": {
+        "password": "pbkdf2_sha256$390000$PeSX8IqCyBerEnvod7pCeH$FZAlUC0fRKjJMd3jZwL0PL7gIhU15RTLJDgdpl9ALC8=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "user1",
+        "first_name": "",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-06-27T16:00:27.874Z",
+        "email": "user1@gmail.com",
+        "is_user": true,
+        "is_employee": false,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "city.myuser",
+    "pk": 2,
+    "fields": {
+        "password": "pbkdf2_sha256$390000$5U2tztHS6ObIZyWLebBeMo$+PVBEaclUSyjPIIMS87fQw7Zxfb8rE/5rk2N2CXKmtw=",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "employee1",
+        "first_name": "",
+        "last_name": "",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2024-06-27T16:01:20Z",
+        "email": "employee1@example.com",
+        "is_user": false,
+        "is_employee": true,
+        "groups": [],
+        "user_permissions": []
+    }
+},
+  {
+    "model": "city.complaint",
+    "pk": 1,
+    "fields": {
+      "user_name": 1,
+      "complaint_type": "Garbage dump",
+      "address": "123 Main St",
+      "area": "Downtown",
+      "city": "Cityville",
+      "pincode": "123456",
+      "landmark": "Near Park",
+      "info": "Garbage is not collected for weeks.",
+      "complaint_date": "2024-06-26T12:00:00Z",
+      "picture": "",
+      "tracking_id": "TRK1234567890",
+      "status": "Submitted"
+    }
+  },
+  {
+    "model": "city.queries",
+    "pk": 1,
+    "fields": {
+      "name": "John Doe",
+      "email": "johndoe@example.com",
+      "message": "How to report an issue?"
+    }
+  },
+  {
+    "model": "city.employee",
+    "pk": 1,
+    "fields": {
+      "name": "Jane Smith",
+      "phone": 1234567890,
+      "email": "jane.smith@example.com",
+      "password": "password123"
+    }
+  },
+  {
+    "model": "city.feedback",
+    "pk": 1,
+    "fields": {
+      "name": "User Feedback",
+      "comment": "Great service!",
+      "rating": 5,
+      "date": "2024-06-26T14:00:00Z"
+    }
+  },
+  {
+    "model": "city.complaintcomment",
+    "pk": 1,
+    "fields": {
+      "complaint": 1,
+      "user": 2,
+      "comment": "We are looking into this issue.",
+      "date": "2024-06-26T15:00:00Z"
+    }
+  },
+  {
+    "model": "city.greeninitiative",
+    "pk": 1,
+    "fields": {
+      "title": "Tree Planting Drive",
+      "description": "Join us for a tree planting drive this weekend.",
+      "date": "2024-06-27T10:00:00Z",
+      "image": ""
+    }
+  },
+  {
+    "model": "city.greeninitiativecomment",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "green_initiative": 1,
+      "comment": "Looking forward to it!",
+      "created_at": "2024-06-27T11:00:00Z"
+    }
+  }
+]

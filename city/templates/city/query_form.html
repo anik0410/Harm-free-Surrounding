@@ -1,0 +1,23 @@
+{% extends "city/navbar.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Contact Us</h2>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.name.label_tag }}
+            {{ form.name }}
+        </div>
+        <div class="form-group">
+            {{ form.email.label_tag }}
+            {{ form.email }}
+        </div>
+        <div class="form-group">
+            {{ form.message.label_tag }}
+            {{ form.message }}
+        </div>
+        <button type="submit" class="btn btn-primary mb-2 mt-2">Submit</button>
+    </form>
+</div>
+{% endblock %}

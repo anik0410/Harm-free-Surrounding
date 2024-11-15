@@ -1,0 +1,30 @@
+{% extends "city/navbar.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Complaint Details</h2>
+    <div class="card mb-3">
+        <div class="card-header">
+            <h5 class="card-title">{{ complaint.complaint_type }}</h5>
+        </div>
+        <div class="card-body">
+            <p class="card-text"><strong>User:</strong> {{ complaint.user_name.username }}</p>
+            <p class="card-text"><strong>Address:</strong> {{ complaint.address }}</p>
+            <p class="card-text"><strong>Area:</strong> {{ complaint.area }}</p>
+            <p class="card-text"><strong>City:</strong> {{ complaint.city }}</p>
+            <p class="card-text"><strong>Pincode:</strong> {{ complaint.pincode }}</p>
+            <p class="card-text"><strong>Landmark:</strong> {{ complaint.landmark }}</p>
+            <p class="card-text"><strong>Additional Info:</strong> {{ complaint.info }}</p>
+            <p class="card-text"><strong>Date:</strong> {{ complaint.complaint_date }}</p>
+            <p class="card-text"><strong>Status:</strong> {{ complaint.status }}</p>
+            <p class="card-text"><strong>Tracking ID:</strong> {{ complaint.tracking_id }}</p>
+            {% if complaint.picture %}
+            <div class="mb-3">
+                <img src="{{ complaint.picture.url }}" alt="Complaint Image" class="img-fluid">
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}

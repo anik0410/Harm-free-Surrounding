@@ -1,0 +1,30 @@
+{% extends 'city/navbar.html' %}
+{% block content %}
+<div class="container mt-5">
+        <h2>Add Employees</h2>
+        <form method="POST">
+            {% csrf_token %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Select</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="users" value="{{ user.id }}" {% if user.is_employee %}checked{% endif %}>
+                        </td>
+                        <td>{{ user.username }}</td>
+                        <td>{{ user.email }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button type="submit" class="btn btn-primary mb-2">Update Employees</button>
+        </form>
+    </div>
+{% endblock %}
