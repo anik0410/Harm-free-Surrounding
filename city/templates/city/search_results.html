@@ -1,0 +1,20 @@
+{% extends 'city/navbar.html' %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h2>Search Results for "{{ query }}" in "{{ category }}"</h2>
+        <ul class="list-group">
+            {% for result in results %}
+                <li class="list-group-item">
+                    {% if category == 'complaints' %}
+                        <a href="{% url 'complaint_detail' result.pk %}">{{ result.info }}</a>
+                    {% elif category == 'initiatives' %}
+                        <a href="{% url 'green_initiative_detail' result.pk %}">{{ result.title }}</a>
+                    {% endif %}
+                </li>
+            {% empty %}
+                <li class="list-group-item">No results found.</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock content %}

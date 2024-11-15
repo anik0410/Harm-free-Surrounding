@@ -1,0 +1,29 @@
+{% extends "city/navbar.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Green Initiatives</h2>
+    <div class="mb-4">
+        <a href="{% url 'add_green_initiative' %}" class="btn btn-primary">Add Green Initiative</a>
+    </div>
+    <div class="row">
+        {% for initiative in initiatives %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                {% if initiative.image %}
+                <img src="{{ initiative.image.url }}" class="card-img-top" alt="{{ initiative.title }}">
+                {% else %}
+                <img src="{% static 'default.jpg' %}" class="card-img-top" alt="{{ initiative.title }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title"><a href="{% url 'green_initiative_detail' initiative.pk %}">{{ initiative.title }}</a></h5>
+                    <p class="card-text">{{ initiative.description|truncatewords:20 }}</p>
+                    <p class="card-text"><small class="text-muted">{{ initiative.date|date:"F d, Y" }}</small></p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

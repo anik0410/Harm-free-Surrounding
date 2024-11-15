@@ -1,0 +1,68 @@
+{% extends "city/navbar.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <!-- Left Column: Main Article Section (60%) -->
+        <div class="col-lg-7">
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h2 class="card-title">{{ initiative.title }}</h2>
+                    <h6 class="card-subtitle text-muted mb-3">{{ initiative.date|date:"F d, Y" }} | {{ initiative.location }}</h6>
+                    {% if initiative.image %}
+                    <img src="{{ initiative.image.url }}" class="img-fluid rounded mb-3" alt="{{ initiative.title }}">
+                    {% else %}
+                    <img src="{% static 'default.jpg' %}" class="img-fluid rounded mb-3" alt="{{ initiative.title }}">
+                    {% endif %}
+                    <p class="card-text">{{ initiative.information }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Comments Section (40%) -->
+        <div class="col-lg-5">
+            <!-- Existing Comments -->
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h3>Other Views</h3>
+                    <div class="comments">
+                        {% for comment in comments %}
+                        <div class="media mb-3">
+                            <div class="media-body">
+                                <h5 class="mt-0"><strong>{{ comment.user.username }}</strong></h5>
+                                <p class="mb-1"><strong>Personal Views:</strong> {{ comment.personal_views }}</p>
+                                <small class="text-muted">{{ comment.created_at|date:"F d, Y H:i" }}</small>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comment Form -->
+            {% if user.is_authenticated %}
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <h4>Share Your Opinions</h4>
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="id_personal_views">Personal Views</label>
+                            {{ form.personal_views }}
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-2">Submit</button>
+                    </form>
+                </div>
+            </div>
+            {% else %}
+            <div class="card mb-4 shadow-sm">
+                <div class="card-body">
+                    <p><a href="{% url 'login' %}">Log in</a> to add your views.</p>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

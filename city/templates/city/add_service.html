@@ -1,0 +1,27 @@
+{% extends "city/navbar.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2>Add Service</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.title.label_tag }}
+            {{ form.title }}
+        </div>
+        <div class="form-group">
+            {{ form.description.label_tag }}
+            {{ form.description }}
+        </div>
+        <div class="form-group">
+            {{ form.date.label_tag }}
+            {{ form.date }}
+        </div>
+        <div class="form-group">
+            {{ form.image.label_tag }}
+            {{ form.image }}
+        </div>
+        <button type="submit" class="btn btn-primary mt-2 mb-2">Submit</button>
+    </form>
+</div>
+{% endblock %}
