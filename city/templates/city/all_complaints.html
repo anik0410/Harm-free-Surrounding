@@ -1,0 +1,25 @@
+{% extends 'city/navbar.html' %}
+{% block title %}
+<title>All Complaints</title>
+{% endblock title %}
+
+{% block content %}
+<h2>All Complaints</h2>
+<div class="complaints-list">
+  {% if complaints %}
+    <ul>
+      {% for complaint in complaints %}
+        <li>
+          <strong>{{ complaint.complaint_type }}</strong> by {{ complaint.user_name.username }} <br>
+          Address: {{ complaint.address }}, {{ complaint.city }} <br>
+          Date: {{ complaint.complaint_date }} <br>
+          Status: {{ complaint.status }}
+        </li>
+        <hr>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No complaints filed yet.</p>
+  {% endif %}
+</div>
+{% endblock content %}

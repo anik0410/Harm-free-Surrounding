@@ -415,18 +415,7 @@ def add_employee(request):
         return render(request, 'city/add_employees.html', {'users': MyUser.objects.all()})
 
 
-def manager_login(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        user = authenticate(request, username=username, password=password)
-        manager = Manager.objects.filter(user=user).first()
-        if user is not None and manager is not None:
-            login(request, user)
-            # return render(request,"city/login.html")
-            return redirect('manage_employees')
-        else:
-            logout(request)
-            messages.info(request, 'username or password is incorrect')
-
-    return render(request, 'city/manager_login.html')
+@login_required
+def all_complaints(request):
+    complaints = Complaint.objects.all()
+    return render(request, 'city/all_complaints.html', {'complaints': complaints})
