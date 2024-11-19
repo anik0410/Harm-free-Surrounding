@@ -1,4 +1,5 @@
 {% extends 'city/navbar.html' %}
+
 {% block title %}
 <title>All Complaints</title>
 {% endblock title %}
@@ -13,7 +14,22 @@
           <strong>{{ complaint.complaint_type }}</strong> by {{ complaint.user_name.username }} <br>
           Address: {{ complaint.address }}, {{ complaint.city }} <br>
           Date: {{ complaint.complaint_date }} <br>
-          Status: {{ complaint.status }}
+          Status: {{ complaint.status }} <br>
+          Thumbs Up: <span id="thumbs-up-count-{{ complaint.id }}">{{ complaint.thumbs_up }}</span> <br>
+          {% if not complaint.is_verified %}
+            {% if user in complaint.voted_users.all %}
+              <span class="text-info">You have already voted.</span>
+            {% else %}
+              <button
+                  id="thumbs-up-btn-{{ complaint.id }}"
+                  class="btn btn-primary btn-sm"
+                  onclick="thumbsUp({{ complaint.id }})">
+                👍 Thumbs Up
+              </button>
+            {% endif %}
+          {% else %}
+            <span class="text-success">Verified Complaint</span>
+          {% endif %}
         </li>
         <hr>
       {% endfor %}
@@ -22,4 +38,43 @@
     <p>No complaints filed yet.</p>
   {% endif %}
 </div>
+
+<script>
+function thumbsUp(complaintId) {
+    fetch(`/complaint/${complaintId}/thumbs-up/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+        },
+    })
+    .then(response => {
+        if (response.status === 400) {
+            alert('You have already given a thumbs-up for this complaint.');
+            return;
+        }
+        return response.json();
+    })
+    .then(data => {
+        if (data) {
+            const thumbsUpCount = document.getElementById(`thumbs-up-count-${complaintId}`);
+            thumbsUpCount.textContent = data.thumbs_up;
+
+            if (data.is_verified) {
+                alert('This complaint has been verified!');
+                const thumbsUpBtn = document.getElementById(`thumbs-up-btn-${complaintId}`);
+                thumbsUpBtn.remove(); // Remove the button
+                const listItem = thumbsUpBtn.closest('li');
+                const verifiedLabel = document.createElement('span');
+                verifiedLabel.className = 'text-success';
+                verifiedLabel.textContent = 'Verified Complaint';
+                listItem.appendChild(verifiedLabel);
+            }
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Something went wrong. Please try again.');
+    });
+}
+</script>
 {% endblock content %}

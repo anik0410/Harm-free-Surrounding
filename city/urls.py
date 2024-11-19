@@ -35,7 +35,7 @@ urlpatterns=[
     path('search/', views.search_results, name='search_results'),
     path('complaint/<int:pk>/', ComplaintDetailView.as_view(), name='complaint_detail'),
     path('query/', views.query_view, name='query_form'),
-
+    path('complaint/<int:complaint_id>/thumbs-up/', views.thumbs_up_complaint, name='thumbs_up_complaint'),
     path('manage_employees/', views.add_employee, name="manage_employees"),
     path('accounts/password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
     path('accounts/password_reset/done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),

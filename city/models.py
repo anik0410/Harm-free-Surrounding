@@ -28,6 +28,9 @@ class Complaint(models.Model):
     area = models.CharField(max_length=50, null=True)
     city = models.CharField(max_length=100, null=True)
     pincode = models.CharField(max_length=6, null=True)
+    thumbs_up = models.PositiveIntegerField(default=0)
+    is_verified = models.BooleanField(default=False)
+    voted_users = models.ManyToManyField(MyUser, related_name='voted_complaints', blank=True)
     landmark = models.CharField(max_length=200, null=True)
     info = models.CharField(max_length=200, null=True)
     complaint_date = models.DateTimeField(auto_now_add=True, null=True)
@@ -44,7 +47,7 @@ class Queries(models.Model):
     message = models.CharField(max_length=500, null=True)
 
     def __str__(self):
-        return f"{self.name}"
+        return f"{self.user_name} - Verified: {self.is_verified}"
 
 class Feedback(models.Model):
     person_name = models.CharField(max_length=255)

@@ -22,6 +22,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.models import User
 from .email_utils import send_email
+from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
 
 def password_reset_request(request):
     if request.method == "POST":
@@ -416,3 +418,21 @@ def add_employee(request):
 def all_complaints(request):
     complaints = Complaint.objects.all()
     return render(request, 'city/all_complaints.html', {'complaints': complaints})
+
+
+@login_required
+def thumbs_up_complaint(request, complaint_id):
+    complaint = get_object_or_404(Complaint, id=complaint_id)
+
+    # Check if the user has already voted
+    if request.user in complaint.voted_users.all():
+        return JsonResponse({'error': 'You have already voted for this complaint.'}, status=400)
+
+    # Add the user to the voted_users and increment the thumbs-up count
+    complaint.voted_users.add(request.user)
+    complaint.thumbs_up += 1
+    if complaint.thumbs_up >= 5:
+        complaint.is_verified = True
+    complaint.save()
+
+    return JsonResponse({'thumbs_up': complaint.thumbs_up, 'is_verified': complaint.is_verified})

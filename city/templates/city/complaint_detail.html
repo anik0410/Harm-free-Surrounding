@@ -26,5 +26,49 @@
         </div>
     </div>
 
+    <!-- Thumbs Up Section -->
+    <div class="card mt-3">
+        <div class="card-header">
+            <h5 class="card-title">Feedback</h5>
+        </div>
+        <div class="card-body">
+            <p class="card-text">
+                <strong>Thumbs Up:</strong> <span id="thumbs-up-count">{{ complaint.thumbs_up }}</span>
+            </p>
+            {% if not complaint.is_verified %}
+                <button id="thumbs-up-btn" class="btn btn-primary" onclick="thumbsUp({{ complaint.id }})">
+                    👍 Thumbs Up
+                </button>
+            {% else %}
+                <p class="text-success">This complaint is verified!</p>
+            {% endif %}
+        </div>
+    </div>
 </div>
+
+<script>
+function thumbsUp(complaintId) {
+    fetch(`/complaint/${complaintId}/thumbs-up/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        const thumbsUpCount = document.getElementById('thumbs-up-count');
+        thumbsUpCount.textContent = data.thumbs_up;
+
+        if (data.is_verified) {
+            alert('This complaint has been verified!');
+            location.reload();
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Something went wrong. Please try again.');
+    });
+}
+</script>
 {% endblock %}
+
