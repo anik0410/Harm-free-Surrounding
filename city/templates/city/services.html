@@ -1,5 +1,5 @@
   {% extends 'city/navbar.html' %} {% load static %} {% block title %}
-  <title>Clean Dream | Services</title>
+  <title>Clean Environment | Services</title>
   {% endblock title %} {% block content %}
   <style>
     .container {
@@ -14,9 +14,9 @@
   <br />
   <h1>Services</h1>
   {% if user.is_authenticated %}
-  {% if user.is_employee %}
+
   <a class="btn btn-primary m-2 " href="{% url 'add_service' %}">Add Service</a>
-  {% endif %}
+
   {% endif %}
 
   <div class="container">

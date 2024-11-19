@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-<title>Clean Dream</title>
+<title>Clean Environment</title>
 {% endblock title %}
 
 {% block content %}
@@ -12,7 +12,7 @@
   </ul>
   <div class="carousel-inner">
     <div class="carousel-item active">
-      <img src="{% static 'images/farming.jpeg' %}" />
+      <img src="{% static 'images/home.jpeg' %}" />
       <div class="carousel-caption">
         <h1 class="display-2">Crowdsourced environmental reporting platform</h1>
         <h3>clean environment</h3>
@@ -61,18 +61,13 @@
     <div class="col-md-6">
       <h1>About Us</h1>
       <p>
-        The webpage efficiently addresses the complaints registered by users
-        regarding garbage, sewage, and other pollution-related issues. It
-        provides a quick and easy way for citizens to report their concerns and
-        ensures timely resolution of the same. Overall, it is a great initiative
-        to ensure that the cities are clean, pollution-free, and healthy for the
-        residents.
+        The webpage serves as an effective tool for addressing user-reported issues like garbage, sewage, and various pollution concerns. It offers a simple and user-friendly platform for citizens to voice their complaints, promoting swift action and resolution. This initiative contributes significantly to maintaining cleaner, healthier, and more pollution-free urban environments for the community.
       </p>
-      <a class="btn btn-primary" href="{% url 'feedback' %}">Testimonials</a>
+      <a class="btn btn-primary" href="{% url 'feedback' %}">Reviews</a>
     </div>
     <div class="col-md-6">
       <img
-        src="{% static 'images/nature.jpg' %}"
+        src="{% static 'images/default.jpg' %}"
         alt="About Us Image"
         class="img-fluid"
       />

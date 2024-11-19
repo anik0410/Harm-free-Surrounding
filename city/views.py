@@ -355,10 +355,7 @@ def query_view(request):
     return render(request, 'city/query_form.html', {'form': form})
 
 
-@login_required
-def user_history(request):
-    visit_history = request.session.get('visit_history', {})
-    return render(request, 'city/user_history.html', {'visit_history': visit_history})
+
 
 def services(request):
     services = Service.objects.all()
