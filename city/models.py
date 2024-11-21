@@ -35,10 +35,11 @@ class Complaint(models.Model):
     info = models.CharField(max_length=200, null=True)
     complaint_date = models.DateTimeField(auto_now_add=True, null=True)
     picture = models.ImageField(null=True)
+    video = models.FileField(upload_to='uploads/complaint_videos/', null=True, blank=True)
     tracking_id = models.CharField(null=True, max_length=16)
     status = models.CharField(max_length=200, null=True, default='Submitted', choices=STATUS)
 
-    def __str__(self):
+    def _str_(self):
         return f"{self.user_name}"
 
 class Queries(models.Model):

@@ -106,23 +106,25 @@ def logoutUser(request):
     logout(request)
     return redirect('home')
 
+
 @login_required(login_url='login')
 def complaint(request):
     if request.method == 'POST':
-        form = ComplaintForm(request.POST,request.FILES)
+        form = ComplaintForm(request.POST, request.FILES)
         if form.is_valid():
-            types=form.cleaned_data['complaint_type']
-            area=form.cleaned_data['area']
-            tracking_id=(request.user.email[0:4]+str(random.randint(100,999))+types[0:2]+str(random.randint(0,9))+types[-1:-3]+area[1:3]).upper()
+            types = form.cleaned_data['complaint_type']
+
+            tracking_id = (request.user.email[0:4] + str(random.randint(100, 999)) + types[0:2] + str(
+                random.randint(0, 9)) + types[-1:-3]).upper()
             complaint = form.save(commit=False)
             complaint.user_name = request.user
-            complaint.tracking_id=tracking_id
+            complaint.tracking_id = tracking_id
             complaint.save()
-            
-            email_reciever=request.user.email
-            sub='Complaint Registered'
-            body=f'Hello {request.user}, \n\tYour complaint on {types} at {area}, It will be solved within two working days. You can track the complaint with this tracking {tracking_id}. \n\nClean Dream\nWindsor'
-            #mail(email_reciever,sub,body)
+
+            email_reciever = request.user.email
+            sub = 'Complaint Registered'
+            body = f'Hello {request.user}, \n\tYour complaint on {types} , It will be solved within two working days. You can track the complaint with this tracking {tracking_id}. \n\nClean environment\nWindsor'
+            # mail(email_reciever,sub,body)
             return redirect('user_complaints')
     else:
         form = ComplaintForm()

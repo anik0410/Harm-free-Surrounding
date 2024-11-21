@@ -12,7 +12,7 @@ class ComplaintForm(forms.ModelForm):
     class Meta:
         model = Complaint
         
-        fields =['complaint_type','address','area','city','pincode','landmark','info','picture']
+        fields =['complaint_type','address','city','info','picture','video']
         
         
 
