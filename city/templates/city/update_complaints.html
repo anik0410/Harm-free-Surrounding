@@ -1,5 +1,5 @@
 {% extends 'city/navbar.html' %} {% load crispy_forms_tags %}{% block title %}
-<title>Clean Dream | Update Complaints</title>
+<title>Clean Environment | Update Complaints</title>
 {% endblock title %} {% block content%}
 <form action="" method="post">
   {% csrf_token %} {{form.complaint_type|as_crispy_field}}

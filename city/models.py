@@ -25,14 +25,15 @@ class Complaint(models.Model):
     user_name = models.ForeignKey(MyUser, on_delete=models.CASCADE)
     complaint_type = models.CharField(max_length=200, null=True, choices=COMPLAINTS)
     address = models.CharField(max_length=500, null=True)
-    area = models.CharField(max_length=50, null=True)
     city = models.CharField(max_length=100, null=True)
-    pincode = models.CharField(max_length=6, null=True)
+    postal_code = models.CharField(max_length=20, null=True, blank=True)
     thumbs_up = models.PositiveIntegerField(default=0)
     is_verified = models.BooleanField(default=False)
     voted_users = models.ManyToManyField(MyUser, related_name='voted_complaints', blank=True)
     landmark = models.CharField(max_length=200, null=True)
     info = models.CharField(max_length=200, null=True)
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
     complaint_date = models.DateTimeField(auto_now_add=True, null=True)
     picture = models.ImageField(null=True)
     video = models.FileField(upload_to='uploads/complaint_videos/', null=True, blank=True)
@@ -47,7 +48,7 @@ class Queries(models.Model):
     email = models.CharField(max_length=100, null=True)
     message = models.CharField(max_length=500, null=True)
 
-    def __str__(self):
+    def _str_(self):
         return f"{self.user_name} - Verified: {self.is_verified}"
 
 class Feedback(models.Model):
@@ -56,33 +57,5 @@ class Feedback(models.Model):
     rating = models.IntegerField()
     date = models.DateTimeField(auto_now_add=True)
 
-    def __str__(self):
+    def _str_(self):
         return f"Feedback by {self.person_name} on {self.date}"
-
-class Service(models.Model):
-    title = models.CharField(max_length=200)
-    description = models.TextField()
-    image = models.ImageField(upload_to='services/', null=True, blank=True)
-
-    def __str__(self):
-        return self.title
-
-class GreenInitiative(models.Model):
-    title = models.CharField(max_length=200)
-    information = models.TextField()
-    date = models.DateTimeField(default=timezone.now)
-    image = models.ImageField(upload_to='initiatives/', null=True, blank=True)
-    location = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.title
-
-class GreenInitiativeComment(models.Model):
-    user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
-    green_initiative = models.ForeignKey(GreenInitiative, on_delete=models.CASCADE, related_name='comments')
-    comment = models.TextField()
-    personal_views = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"Comment by {self.user.username} on {self.green_initiative.title}"

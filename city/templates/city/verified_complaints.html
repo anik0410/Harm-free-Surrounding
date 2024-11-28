@@ -1,0 +1,80 @@
+{% extends 'city/navbar.html' %}
+{% load static %}
+
+{% block title %}
+<title>Verified Complaints</title>
+{% endblock title %}
+
+{% block content %}
+<h2 style="margin: 20px;">Verified Complaints</h2>
+
+<!-- Verified Complaints List -->
+<div class="complaints-list" style="margin: 20px;">
+  {% if complaints %}
+    <ul>
+      {% for complaint in complaints %}
+        <li>
+          <strong>{{ complaint.complaint_type }}</strong> by {{ complaint.user_name.username }} <br>
+          Address: {{ complaint.address }}, {{ complaint.city }} <br>
+          Date: {{ complaint.complaint_date }} <br>
+          Status: {{ complaint.status }} <br>
+          <a href="{% url 'complaint_detail' complaint.id %}" class="btn btn-link btn-sm">View Details</a><br>
+          <span class="text-success">Verified Complaint</span> <br>
+        </li>
+        <hr>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No verified complaints available yet.</p>
+  {% endif %}
+</div>
+
+<!-- Verified Complaints Map -->
+<h3 style="margin: 20px;">Verified Complaints Map</h3>
+<div id="map" style="width: 100%; height: 500px;"></div>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5tQsxri8webEFQRqqFwL_gYhq2nyKoQM&callback=initMap" defer></script>
+
+<script>
+    function initMap() {
+        // Initialize the map centered at Windsor, ON
+        var map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: 42.3149, lng: -83.0364 },
+            zoom: 12,
+        });
+
+        {% for complaint in complaints %}
+            var customIcon = "{% static 'images/error.png' %}";  // Path to your custom marker (error.png)
+
+            // Define the size of the marker (adjust these values as needed)
+            var markerSize = new google.maps.Size(40, 40);  // Example size: 40px by 40px
+
+            var marker = new google.maps.Marker({
+                position: { lat: {{ complaint.latitude }}, lng: {{ complaint.longitude }} },
+                map: map,
+                title: "{{ complaint.info }}",
+                icon: {
+                    url: customIcon,  // Path to your custom marker image
+                    size: markerSize,  // Set size of the marker
+                    scaledSize: markerSize,  // Ensure the marker is scaled correctly
+                }
+            });
+
+            // Info window for each complaint
+            var infoWindow = new google.maps.InfoWindow({
+                content: `
+                    <h4>{{ complaint.info }}</h4>
+                    <p>{{ complaint.address }}, {{ complaint.city }}</p>
+                    <p>Status: {{ complaint.status }}</p>
+                `,
+            });
+
+            // Open info window on marker click
+            marker.addListener('click', function () {
+                infoWindow.open(map, marker);
+            });
+        {% endfor %}
+    }
+</script>
+
+{% endblock content %}

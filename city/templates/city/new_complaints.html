@@ -1,4 +1,5 @@
-{% extends 'city/navbar.html' %}{% load static %}
+{% extends 'city/navbar.html' %}
+{% load static %}
 {% block content %}
 <!DOCTYPE html>
 <html lang="en">
@@ -31,11 +32,9 @@
       }
       #section {
         height: 100% !important;
-
         margin: 0;
         padding: 0;
         display: flex;
-
         background-size: cover;
         justify-content: center;
         flex-wrap: wrap;
@@ -44,7 +43,7 @@
         height: 200px;
         width: 200px;
       }
-      .gif{
+      .gif {
         width: 100%;
         height: 70%;
       }
@@ -63,63 +62,63 @@
     <div id="section">
       {% if new %}
       {% for complaints in new %}
+      <!-- Check if latitude and longitude are valid -->
+      {% if complaints.latitude and complaints.longitude %}
       <div class="card" style="width: 18rem">
-
-        <img src="{{complaints.picture.url}}" class="card-img-top" alt="..." />
+        <img
+          src="{{ complaints.picture.url }}"
+          class="card-img-top"
+          alt="Complaint Image"
+        />
         <div class="card-body">
           <p class="card-title" id="type">
-            <h5>Complaint Type:</h5>&nbsp;{{complaints.complaint_type}}
+            <h5>Complaint Type:</h5>&nbsp;{{ complaints.complaint_type }}
           </p>
         </div>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">
             <p id="address">
-              <h5>Complaint Address:</h5>&nbsp;{{complaints.address}}
-            </p>
-          </li>
-          <li class="list-group-item">
-            <p id="area">
-              <h5>Complaint Area:</h5>&nbsp;{{complaints.area}}
+              <h5>Complaint Address:</h5>&nbsp;{{ complaints.address }}
             </p>
           </li>
           <li class="list-group-item">
             <p id="city">
-              <h5>Complaint City:</h5>&nbsp;{{complaints.city}}
+              <h5>Complaint City:</h5>&nbsp;{{ complaints.city }}
             </p>
           </li>
           <li class="list-group-item">
             <p id="city">
-               <h5>Complaint Lanmark:</h5>&nbsp;{{complaints.landmark}}
-            </p>
-          </li>
-          <li class="list-group-item">
-            <p id="city">
-              <h5>More Info</h5>&nbsp;{{complaints.info}}
+              <h5>More Info:</h5>&nbsp;{{ complaints.info }}
             </p>
           </li>
           <li class="list-group-item">
             <p id="date">
-              <h5>Complaint Date</h5>&nbsp;
-              {{complaints.complaint_date}}
+              <h5>Complaint Date:</h5>&nbsp;{{ complaints.complaint_date }}
             </p>
           </li>
           <li class="list-group-item">
             <p id="status">
-              <i class="fa-regular fa-square-check"></i
-              >&nbsp;{{complaints.status}}
-              <a href="{% url 'update_new_complaints' complaints.id %}" class="btn btn-primary">Update</a>
+              <i class="fa-regular fa-square-check"></i>&nbsp;{{ complaints.status }}
+              <a
+                href="{% url 'update_new_complaints' complaints.id %}"
+                class="btn btn-primary"
+                >Update</a
+              >
             </p>
-
           </li>
         </ul>
       </div>
       <br />
-
+      {% else %}
+      <!-- Show a message or indicator for invalid geolocation -->
+      <div class="alert alert-warning" role="alert">
+        Complaint "{{ complaints.complaint_type }}" has invalid location data.
+      </div>
+      {% endif %}
       {% endfor %}
       {% else %}
-      <img src="{% static 'images/gif2.gif' %}" alt="" class="gif">
+      <img src="{% static 'images/gif2.gif' %}" alt="" class="gif" />
       <h1>Oops! No New Complaints</h1>
-      
       {% endif %}
     </div>
   </body>

@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import ComplaintDetailView
+from .views import ComplaintDetailView, verified_complaints
 from .views import HomeView
 from django.urls import path
 from django.contrib.auth import views as auth_views
@@ -8,8 +8,8 @@ from django.contrib.auth import views as auth_views
 urlpatterns=[
     path('',HomeView.as_view(),name='home'),
     path('about/',views.about,name='about'),
-    path('services',views.services,name='services'),
-    path('add_service',views.add_service,name='add_service'),
+
+
     path('register',views.register,name='register'),
     path('login/', views.login_page, name='login'),
     path('accounts/login/',views.login_page,name='login'),
@@ -27,11 +27,13 @@ urlpatterns=[
     path('update/pending/complaints/<str:pk>',views.update_pending_complaints,name='update_pending_complaints'),
     path('update/solved/complaints/<str:pk>',views.update_solved_complaints,name='update_solved_complaints'),
     path('check/status',views.check_status,name='check_status'),
-    path('add/green_initiative/', views.add_green_initiative, name='add_green_initiative'),
-    path('green_initiatives/', views.green_initiatives, name='green_initiatives'),
-    path('green_initiative/<int:pk>/', views.green_initiative_detail, name='green_initiative_detail'),
-    path('green_initiatives/', views.green_initiatives, name='green_initiatives'),
+
+
+
+
+
     path('feedback/', views.feedback, name='feedback'),
+    path('verified-complaints/', verified_complaints, name='verified_complaints'),
     path('search/', views.search_results, name='search_results'),
     path('complaint/<int:pk>/', ComplaintDetailView.as_view(), name='complaint_detail'),
     path('query/', views.query_view, name='query_form'),

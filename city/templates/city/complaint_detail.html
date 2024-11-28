@@ -10,65 +10,76 @@
         <div class="card-body">
             <p class="card-text"><strong>User:</strong> {{ complaint.user_name.username }}</p>
             <p class="card-text"><strong>Address:</strong> {{ complaint.address }}</p>
-            <p class="card-text"><strong>Area:</strong> {{ complaint.area }}</p>
+
             <p class="card-text"><strong>City:</strong> {{ complaint.city }}</p>
-            <p class="card-text"><strong>Pincode:</strong> {{ complaint.pincode }}</p>
-            <p class="card-text"><strong>Landmark:</strong> {{ complaint.landmark }}</p>
+            <p class="card-text"><strong>Postal code:</strong> {{ complaint.postal_code }}</p>
+
             <p class="card-text"><strong>Additional Info:</strong> {{ complaint.info }}</p>
             <p class="card-text"><strong>Date:</strong> {{ complaint.complaint_date }}</p>
             <p class="card-text"><strong>Status:</strong> {{ complaint.status }}</p>
             <p class="card-text"><strong>Tracking ID:</strong> {{ complaint.tracking_id }}</p>
+
             {% if complaint.picture %}
-            <div class="mb-3">
+            <div class="mb-3" >
                 <img src="{{ complaint.picture.url }}" alt="Complaint Image" class="img-fluid">
             </div>
             {% endif %}
-        </div>
-    </div>
 
-    <!-- Thumbs Up Section -->
-    <div class="card mt-3">
-        <div class="card-header">
-            <h5 class="card-title">Feedback</h5>
-        </div>
-        <div class="card-body">
-            <p class="card-text">
-                <strong>Thumbs Up:</strong> <span id="thumbs-up-count">{{ complaint.thumbs_up }}</span>
-            </p>
-            {% if not complaint.is_verified %}
-                <button id="thumbs-up-btn" class="btn btn-primary" onclick="thumbsUp({{ complaint.id }})">
-                    👍 Thumbs Up
-                </button>
-            {% else %}
-                <p class="text-success">This complaint is verified!</p>
+            {% if complaint.video %}
+            <div class="mb-3">
+                <video controls >
+                    <source src="{{ complaint.video.url }}" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
             {% endif %}
+
+            <!-- Map Section -->
+            <div class="mt-4">
+                <h5>Location</h5>
+                <div id="map" style="height: 400px; width: 100%;"></div>
+            </div>
         </div>
     </div>
 </div>
 
+<!-- Google Maps API Integration -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5tQsxri8webEFQRqqFwL_gYhq2nyKoQM"></script>
 <script>
-function thumbsUp(complaintId) {
-    fetch(`/complaint/${complaintId}/thumbs-up/`, {
-        method: 'POST',
-        headers: {
-            'X-CSRFToken': '{{ csrf_token }}',
-        },
-    })
-    .then(response => response.json())
-    .then(data => {
-        const thumbsUpCount = document.getElementById('thumbs-up-count');
-        thumbsUpCount.textContent = data.thumbs_up;
+    function initMap() {
+        const latitude = {{ complaint.latitude|default:0 }};
+        const longitude = {{ complaint.longitude|default:0 }};
 
-        if (data.is_verified) {
-            alert('This complaint has been verified!');
-            location.reload();
+        // Default location if coordinates are invalid
+        const defaultLocation = { lat: 0, lng: 0 };
+
+        // Check if latitude and longitude are valid
+        const validLocation = latitude && longitude;
+
+        // If there is no valid location, hide the map entirely
+        if (!validLocation) {
+            document.getElementById("map").style.display = "none";
+            alert("Location data is not available for this complaint.");
+            return;
         }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Something went wrong. Please try again.');
-    });
-}
+
+        // Initialize the map
+        const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 13,  // Adjust zoom level as needed
+            center: { lat: latitude, lng: longitude },
+        });
+
+        // Add a marker if latitude and longitude are valid
+        if (validLocation) {
+            new google.maps.Marker({
+                position: { lat: latitude, lng: longitude },
+                map: map,
+                title: "Complaint Location",
+            });
+        }
+    }
+
+    // Initialize the map when the page loads
+    window.onload = initMap;
 </script>
 {% endblock %}
-

@@ -5,7 +5,7 @@
 {% endblock title %}
 
 {% block content %}
-<h2>All Complaints</h2>
+<h2 style="margin: 20px;">All Complaints</h2>
 <div class="complaints-list">
   {% if complaints %}
     <ul>
@@ -15,6 +15,7 @@
           Address: {{ complaint.address }}, {{ complaint.city }} <br>
           Date: {{ complaint.complaint_date }} <br>
           Status: {{ complaint.status }} <br>
+        <a href="{% url 'complaint_detail' complaint.id %}" class="btn btn-link btn-sm">View Details</a><br>
           Thumbs Up: <span id="thumbs-up-count-{{ complaint.id }}">{{ complaint.thumbs_up }}</span> <br>
           {% if not complaint.is_verified %}
             {% if user in complaint.voted_users.all %}

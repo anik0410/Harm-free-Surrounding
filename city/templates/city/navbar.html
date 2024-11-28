@@ -50,7 +50,7 @@
             {% endif %}
             <a class="nav-link" href="{% url 'home' %}">Home</a>
             <a class="nav-link" href="{% url 'about' %}">About</a>
-            <a class="nav-link" href="{% url 'services' %}">Services</a>
+
 
             {% if user.is_authenticated %}
               {% if user.is_employee %}
@@ -89,15 +89,8 @@
           <!-- Search Bar with Dropdown -->
           <form class="d-flex" role="search" method="GET" action="{% url 'search_results' %}">
             <div class="input-group">
-            {% if user.is_employee %}
-                <select class="form-select" name="category">
-                  <option value="complaints">Complaints</option>
-                  <option value="initiatives">Green Initiatives</option>
-                </select>
-              {% else %}
-                <input type="hidden" name="category" value="initiatives">
-              {% endif %}
-              <input class="form-control" type="search" placeholder="Search" aria-label="Search" name="query">
+
+              <input class="form-control" type="search" placeholder="Enter city name" aria-label="Search" name="query">
               <button class="btn btn-outline-success" type="submit">Search</button>
             </div>
           </form>
@@ -172,7 +165,7 @@
             <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
               <h6 class="text-uppercase mb-4 font-weight-bold">Quick Links</h6>
               <p><a class="text-white" href="{% url 'about' %}">About</a></p>
-              <p><a class="text-white" href="{% url 'services' %}">Services</a></p>
+
 
               <p><a class="text-white" href="{% url 'query_form' %}">Have a Query?</a></p>
             </div>
