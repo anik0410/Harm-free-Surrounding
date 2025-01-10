@@ -3,14 +3,14 @@ import requests
 from django.core.exceptions import ValidationError
 
 def geocode_address(complaint):
-    # Replace with your actual Google API key
+    # added our actual Google API key
     GOOGLE_MAPS_API_KEY = "AIzaSyC5tQsxri8webEFQRqqFwL_gYhq2nyKoQM"
 
-    # Get the full address (address, city, and postal code)
+    # Getting the full address (address, city, and postal code)
     address = f"{complaint.address}, {complaint.city}, {complaint.postal_code}"
     print(f"Geocoding address: {address}")
 
-    # Send request to Google Geocoding API
+    # Sending request to Google Geocoding API
     url = f"https://maps.googleapis.com/maps/api/geocode/json?address={address}&key={GOOGLE_MAPS_API_KEY}"
     try:
         response = requests.get(url)
